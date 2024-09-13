@@ -8,17 +8,13 @@ const EtheriumWallet = ({ mnemonic }) => {
 
   async function genWallet() {
     try {
-      const seed = await mnemonicToSeed(mnemonic); // Await for async call
+      const seed = await mnemonicToSeed(mnemonic);
       const derivationPath = `m/44'/60'/0'/0/${currentIndex}`;
-      
       const hdNode = HDNodeWallet.fromSeed(seed);
       const child = hdNode.derivePath(derivationPath);
-      const privateKey = child.privateKey;
-      
-      const wallet = new Wallet(privateKey);
+      const wallet = new Wallet(child.privateKey);
+
       setCurrentIndex(currentIndex + 1);
-      
-      // Add the new wallet's address to the state
       setAddresses([...addresses, wallet.address]);
     } catch (error) {
       console.error("Error generating Ethereum wallet:", error);
@@ -26,12 +22,20 @@ const EtheriumWallet = ({ mnemonic }) => {
   }
 
   return (
-    <div className="flex flex-col space-y-2 text-white  bg-gray-700 p-[30px] m-[10px] rounded-xl">
-      <button className="rounded-md bg-blue-600 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-blue-700 focus:shadow-none active:bg-blue-700 hover:bg-blue-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" onClick={genWallet}>Add Ethereum Wallet</button>
-      <h1 className="font-bold text-white">Wallet Addresses-</h1>
-      {addresses.map((address, index) => (
-        <div className="font-mono" key={index}>{address}</div>
-      ))}
+    <div className="mr-6 bg-gray-800 p-6 rounded-lg shadow-lg text-white space-y-4">
+      <h2 className="text-xl font-bold">Ethereum Wallet</h2>
+      <p className="text-sm text-gray-400">Click the button below to generate a new Ethereum wallet address.</p>
+      <button onClick={genWallet} className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg">
+        Add Ethereum Wallet
+      </button>
+      <div className="mt-4">
+        <h3 className="font-semibold text-yellow-400">Generated Addresses:</h3>
+        {addresses.map((address, index) => (
+          <div key={index} className="mt-2 font-mono bg-gray-900 p-2 rounded">
+            {address}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
