@@ -6,8 +6,8 @@ function RotatingGrid() {
   const ref = React.useRef();
 
   // Increase the grid size
-  const size = 150; // Increased size of the grid
-  const divisions = 30; // Increased number of divisions
+  const size = 300; // Increased size of the grid
+  const divisions = 50; // Increased number of divisions
   const step = size / divisions;
   const vertices = [];
 
