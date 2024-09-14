@@ -7,7 +7,7 @@ function RotatingGrid() {
 
   // Increase the grid size
   const size = 600; // Increased size of the grid
-  const divisions = 35; // Increased number of divisions
+  const divisions = 30; // Increased number of divisions
   const step = size / divisions;
   const vertices = [];
 
